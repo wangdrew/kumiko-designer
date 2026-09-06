@@ -1,0 +1,16 @@
+{
+  "name": "kumiko-studio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Offline, client-side Kumiko panel designer",
+  "scripts": {
+    "test": "node --test tests/*.test.cjs",
+    "test:browser": "playwright test",
+    "import:stls": "node scripts/import-stls.cjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "clipper-lib": "^6.4.2",
+    "polygon-clipping": "^0.15.7"
+  }
+}

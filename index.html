@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kumiko Studio</title><link rel="icon" type="image/svg+xml" sizes="any" href="favicon.svg"><link rel="stylesheet" href="style.css"></head>
+<body data-panel="workspace">
+<header><a class="brand" href="./index.html"><span class="mark">✳</span><span>KUMIKO <small>STUDIO</small></span></a><span class="tagline">Designed to work with Paper View’s 3D printable Kumiko Generator</span><div class="save-state" id="save-state" role="status">● Saved on this device</div></header>
+<nav class="mobile-tabs" aria-label="Designer sections"><button data-panel="settings" aria-pressed="false">Panel</button><button data-panel="workspace" aria-pressed="true">Canvas</button><button data-panel="palette" aria-pressed="false">Inserts</button></nav>
+<main>
+<aside class="settings"><div class="eyebrow">01 / Frame</div><h2>Frame Settings</h2>
+<label class="field-label" for="name">DESIGN NAME</label><input id="name" maxlength="80" value="Untitled panel">
+<label class="field-label">CORNER ORIENTATION</label><div id="orientations" class="orientations"></div>
+<div class="two-col"><label>Triangles · X<input id="columns" type="number" min="1" max="24" step="1"></label><label>Triangles · Y<input id="rows" type="number" min="1" max="24" step="1"></label></div>
+<label class="field-label dimension-label" for="pitch" title="The size of each triangle in the grid, measured from one corner to the next along an edge. A larger pitch makes the triangles and the whole panel bigger.">JIGUMI PITCH <i aria-hidden="true">?</i><span>mm</span></label><input id="pitch" type="number" min="15" max="150" step="0.5" title="The size of each triangle in the grid, measured from one corner to the next along an edge. A larger pitch makes the triangles and the whole panel bigger." aria-description="The size of each triangle in the grid, measured from one corner to the next along an edge. A larger pitch makes the triangles and the whole panel bigger.">
+<label class="field-label dimension-label" for="mitsuke" title="The visible width of the strips inside each triangle when viewed from above. Larger values make the insert pattern thicker; smaller values make it finer.">MITSUKE <i aria-hidden="true">?</i><span>mm</span></label><input id="mitsuke" type="number" min="0.5" max="8" step="0.1" title="The visible width of the strips inside each triangle when viewed from above. Larger values make the insert pattern thicker; smaller values make it finer." aria-description="The visible width of the strips inside each triangle when viewed from above. Larger values make the insert pattern thicker; smaller values make it finer.">
+<div class="dimension-card"><span>OUTER DIMENSIONS</span><strong id="dimensions"></strong><small>Includes the surrounding frame</small></div>
+<label class="field-label">PANEL COLORS</label><label class="color-row"><span>Board & lattice</span><button type="button" id="board-filament" aria-label="Board and lattice filament color" popovertarget="frame-color-popover"></button><input aria-label="Custom board and lattice color" type="color" id="board-color" value="#BF9E82"></label><label class="color-row"><span>Empty spaces</span><button type="button" id="empty-filament" aria-label="Empty spaces filament color" popovertarget="frame-color-popover"></button><input aria-label="Custom empty spaces color" type="color" id="empty-color" value="#EBEBE3"></label>
+<div class="settings-foot"><span class="tiny-flower">✳</span><p>Made by @tetrarexful</p></div></aside>
+<section class="workspace"><div class="workspace-bar"><div><span class="eyebrow">02 / Canvas</span><h1 id="canvas-title">Untitled panel</h1></div><div class="canvas-tools"><div class="zoom-controls" aria-label="Canvas zoom"><button id="zoom-out" title="Zoom canvas out (−)" aria-label="Zoom out">−</button><button id="zoom-fit" title="Fit panel to window (0)" aria-label="Fit panel to window">100%</button><button id="zoom-in" title="Zoom canvas in (+)" aria-label="Zoom in">+</button></div><div class="history"><button id="undo" title="Undo (⌘/Ctrl Z)">↶ <span>Undo</span></button><button id="redo" title="Redo (⌘/Ctrl Shift Z)">↷ <span>Redo</span></button></div></div></div>
+<div class="canvas" id="canvas"><svg id="board" xmlns="http://www.w3.org/2000/svg" aria-label="Kumiko panel designer" role="group" tabindex="-1"></svg><div id="marquee"></div><div id="rotation-controls" data-canvas-control hidden role="group" aria-label="Rotate selected inserts"><button id="rotate-ccw" aria-label="Rotate insert counterclockwise 120 degrees" title="Rotate counterclockwise 120°">↶</button><span id="rotation-angle">0°</span><button id="rotate-cw" aria-label="Rotate insert clockwise 120 degrees" title="Rotate clockwise 120°">↷</button></div></div>
+<div class="selection-bar"><span id="selection-status" role="status">No triangles selected</span><div><button id="select-all">Select all</button><button id="deselect">Deselect</button><button id="clear" title="Replace selection with empty design 0 (Delete / Backspace)">Clear inserts</button></div></div>
+<p class="help">Double-click: connected edges → corners → deselect · Right-click: insert actions<br>Drag to select · ⌘/Ctrl + click adds · Space + drag pans · <kbd>⌘/Ctrl Z</kbd> Undo · <kbd>⇧ ⌘/Ctrl Z</kbd> Redo · <kbd>+/−</kbd> Zoom · <kbd>0</kbd> Fit · <kbd>Delete / ⌫</kbd> Clear</p>
+<footer><span id="piece-count">0 inserts placed</span><div><button id="new-design">New Design</button><button id="print-parts">▤ Print parts list</button><button id="export-svg">Export SVG</button><button id="load">↑ Load from disk</button><button class="primary" id="save">↓ Save to disk</button></div></footer>
+</section>
+<aside class="palette"><div class="eyebrow">03 / Inserts</div><h2>Insert library <span class="count">41</span></h2>
+<div class="palette-color"><label class="field-label" for="filament-family">INSERT COLOR</label><select id="filament-family"><option value="matte">Bambu PLA Matte</option><option value="basic">Bambu PLA Basic</option><option value="custom">Custom</option></select><button id="add-custom-color" type="button">+ Custom color</button><div id="swatches" class="swatches"></div><div class="chosen-color"><i id="color-chip"></i><span id="color-name"></span><code id="color-hex"></code></div></div>
+<div class="library-heading"><span>THE COLLECTION</span><span>Drag or click to apply</span></div><div id="patterns" class="patterns"></div><p class="catalog-note">All 40 designs use STL outlines.<br><span class="glue-legend">!</span> Requires glue · Hover for details.<br>0 clears a space.</p></aside>
+</main><input type="file" id="file" accept=".json,application/json" hidden><div id="toast" role="status"></div>
+<div id="frame-color-popover" popover aria-labelledby="frame-color-title" class="palette-color">
+<label id="frame-color-title" class="field-label" for="frame-color-family">FRAME COLOR</label>
+<select id="frame-color-family"><option value="matte">Bambu PLA Matte</option><option value="basic">Bambu PLA Basic</option><option value="custom">Custom</option></select>
+<button id="frame-add-custom" type="button">+ Custom color</button><div id="frame-swatches" class="swatches"></div>
+<div class="chosen-color"><i id="frame-color-chip"></i><span id="frame-color-name"></span><code id="frame-color-hex"></code></div>
+</div>
+<dialog id="new-design-dialog" aria-labelledby="new-design-title"><h2 id="new-design-title">Start a new design?</h2><p>This will replace your current design on this device. Save it to disk first to keep a copy.</p><div><button id="cancel-new-design" autofocus>Cancel</button><button id="save-before-new">Save to Disk</button><button id="confirm-new-design" class="primary">Start New Design</button></div></dialog>
+<dialog id="custom-color-dialog" aria-labelledby="custom-color-title">
+<form id="custom-color-form"><h2 id="custom-color-title">Add custom color</h2>
+<label>Name<input id="custom-color-name" maxlength="60" required placeholder="e.g. Warm walnut"></label>
+<label>Color<input type="color" id="custom-color-picker" value="#94745B"></label>
+<label>Hex code<input id="custom-color-hex" value="#94745B" pattern="#[0-9a-fA-F]{6}" required maxlength="7"></label>
+<p id="custom-color-error" role="alert"></p><div><button type="button" id="cancel-custom-color">Cancel</button><button type="submit" class="primary">Add color</button></div>
+</form></dialog>
+<div id="insert-menu" role="menu" aria-label="Insert actions" hidden>
+  <div id="insert-menu-title" class="context-menu-title"></div>
+  <button role="menuitem" tabindex="-1" data-menu-action="edges">Select connected · shared edges<small>Same design and color, touching along a side</small></button>
+  <button role="menuitem" tabindex="-1" data-menu-action="vertices">Select connected · edges + vertices<small>Same design and color, touching along a side or corner</small></button>
+  <div role="separator" class="context-menu-separator"></div>
+  <button role="menuitem" tabindex="-1" data-menu-action="clear">Clear insert<span class="menu-shortcut">Delete</span></button>
+  <button role="menuitem" tabindex="-1" data-menu-action="rotate120">↷ Rotate 120° CW / 240° CCW</button>
+  <button role="menuitem" tabindex="-1" data-menu-action="rotate240">↶ Rotate 240° CW / 120° CCW</button>
+</div>
+<dialog id="parts-dialog"><div class="report-toolbar"><strong>Parts to print</strong><div><button id="close-parts">Close</button><button id="print-sheet" class="primary">Print / Save PDF</button></div></div><article id="parts-report"></article></dialog>
+<script src="js/catalog.js"></script><script src="js/stl-patterns.js"></script><script src="js/vendor/clipper.js"></script><script src="js/insert-width.js"></script><script src="js/geometry.js"></script><script src="js/connected-selection.js"></script><script src="js/app.js"></script>
+</body></html>
