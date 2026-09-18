@@ -99,7 +99,11 @@ button:focus:not(:focus-visible){outline:none}
 #board-filament::before,#empty-filament::before{content:'';display:inline-block;width:10px;height:10px;background:var(--swatch);border:1px solid #0002;border-radius:50%;margin-right:5px;vertical-align:middle}
 #new-design-dialog{max-width:440px;padding:22px}#new-design-dialog p{font-size:13px;line-height:1.6}#new-design-dialog>div{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}#new-design-dialog button{font-size:11px}
 @media print{#new-design-dialog,#frame-color-popover{display:none!important}}
-.report-preview{display:block;width:240px;max-width:100%;height:150px;object-fit:contain;object-position:left center;margin:12px 0;break-inside:avoid;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+.report-figure{margin:24px 0;break-inside:avoid}
+.report-figure figcaption{font-size:14px;font-weight:600;margin-bottom:10px}
+.report-preview,.report-assembly-preview{display:block;width:100%;height:360px;object-fit:contain;object-position:left center;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+@media print{.report-preview,.report-assembly-preview{height:100mm}#parts-report h2{break-after:avoid}}
+@media(max-width:540px){.report-preview,.report-assembly-preview{height:250px}}
 @media screen and (max-height:700px){#add-custom-color{padding:1px 6px;margin-top:2px}}
 #swatches{max-height:95px;overflow:auto;padding:3px}
 #custom-color-dialog{max-width:350px;padding:20px}#custom-color-form label{display:block;font-size:12px;margin:12px 0}#custom-color-form label input{display:block;margin-top:5px}#custom-color-form>div{display:flex;justify-content:flex-end;gap:8px}#custom-color-error{font-size:11px;color:#b15533}
@@ -113,4 +117,16 @@ button:focus:not(:focus-visible){outline:none}
 #insert-menu small{display:block;font-size:9px;color:#839075}
 .context-menu-separator{height:1px;background:var(--line);margin:4px 5px}
 .menu-shortcut{float:right;font-size:9px;color:#87937b;margin-left:15px}
+.pattern-card{position:relative;min-width:0;min-height:64px}
+.pattern-card>.pattern{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:21px 3px 4px}
+.pattern-card .pattern svg{display:block;width:100%;height:40px;max-height:53px;min-height:0;flex:1}
+.pattern-card .pattern .insert-number{position:absolute;top:4px;left:16px;right:16px;margin:0;font-size:9px;line-height:12px;text-align:center;pointer-events:none}
+.pattern-card .pattern .glue-warning{left:3px;right:auto;top:5px;width:11px;height:11px;font-size:8px;line-height:1;margin:0}
+.favorite-heart{position:absolute;right:1px;top:2px;padding:0;width:17px;height:17px;border:0;background:transparent;font-size:14px;line-height:17px;color:#858b81;border-radius:50%}
+.favorite-heart[aria-pressed=true]{color:#a64e49}.favorite-heart:hover{color:#a64e49;background:#fff}
+.favorites-panel{border-top:1px solid var(--line);margin-top:14px;padding-top:5px;flex-shrink:0}
+#patterns{grid-auto-rows:minmax(64px,1fr)}
+#favorites{max-height:min(180px,22vh);grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:88px}#favorites .favorite-color{font-size:9px;line-height:11px;max-width:100%;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.action-icon,.canvas .action-icon{width:19px;height:19px;vertical-align:middle;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;filter:none}
+#color-tooltip{position:fixed;z-index:30;pointer-events:none;padding:6px 9px;border-radius:5px;background:#354b3c;color:white;font-size:11px;box-shadow:0 2px 8px #0002;white-space:nowrap}
 @media print{#insert-menu{display:none!important}}

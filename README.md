@@ -21,9 +21,9 @@ A fully client-side JavaScript designer for rectangular Kumiko panels. Open **in
 
 ## Saving and printing
 
-**New Design** opens a warning before replacing the current panel. Choose **Save to Disk** to download the current design, then **Start New Design** to reset; Cancel keeps your work. Starting a new design is also undoable.
+**New Design** opens a warning before replacing the current panel. Choose **Download design** to download the current design, then **Start New Design** to reset; Cancel keeps your work. Starting a new design is also undoable.
 
-Changes automatically save to localStorage. **Save to disk** downloads a versioned `.kumiko.json` design. **Load from disk** validates the entire file before applying it; loading is undoable. Browser storage depends on the browser/profile and file location. If storage is unavailable, a visible status directs you to save to disk.
+Changes automatically save to localStorage. The header counts design-changing actions (including undo and redo) since the last design download; selection and view changes do not count. The count survives reloads and resets when you download a design. **Download design** downloads a versioned `.kumiko.json` design. **Load from disk** validates the entire file before applying it; loading is undoable. Browser storage depends on the browser/profile and file location. If storage is unavailable, the status also indicates that browser storage is unavailable and directs you to download the design.
 
 **Print parts list** opens a checklist grouped by insert design number and filament color, with full-triangle, edge-half and total quantities. Empty inserts are excluded. **Print / Save PDF** opens the browser's print dialog. The printed document contains a small full-panel preview and the checklist; it includes panel dimensions, pitch, orientation, filament family, name and hex code. The normal browser Print command also generates the current checklist.
 
