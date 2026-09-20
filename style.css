@@ -130,3 +130,16 @@ button:focus:not(:focus-visible){outline:none}
 .action-icon,.canvas .action-icon{width:19px;height:19px;vertical-align:middle;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;filter:none}
 #color-tooltip{position:fixed;z-index:30;pointer-events:none;padding:6px 9px;border-radius:5px;background:#354b3c;color:white;font-size:11px;box-shadow:0 2px 8px #0002;white-space:nowrap}
 @media print{#insert-menu{display:none!important}}
+
+/* Keep the checklist within A4 and Letter portrait pages with 16mm margins. */
+#parts-report{max-width:178mm;margin-inline:auto;overflow-wrap:anywhere}
+#parts-report table{table-layout:fixed}
+#parts-report .parts-checklist th:nth-child(1){width:8%}
+#parts-report .parts-checklist th:nth-child(2){width:18%}
+#parts-report .parts-checklist th:nth-child(3){width:10%}
+#parts-report .parts-checklist th:nth-child(4){width:25%}
+#parts-report .parts-checklist th:nth-child(5){width:15%}
+#parts-report .parts-checklist th:nth-child(n+6){width:8%}
+#parts-report .parts-checklist td,#parts-report .parts-checklist th{padding:9px 4px}
+.report-insert-preview{display:block;width:12mm;max-width:100%;height:auto;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+@media print{body{margin:0}#parts-report{width:100%;padding:0}}

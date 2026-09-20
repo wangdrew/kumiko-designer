@@ -20,6 +20,15 @@ test('part IDs map every placed insert to its combination and filament counts ag
  await page.locator('#print-parts').click();
  await expect(page.locator('.parts-checklist tbody tr')).toHaveCount(3);
  expect(await page.locator('.parts-checklist tbody tr td:first-child').allTextContents()).toEqual(['1','2','3']);
+ const thumbnails=page.locator('.parts-checklist .report-insert-preview');
+ await expect(thumbnails).toHaveCount(3);
+ for(let i=0;i<fixture.rows.length;i++){
+  const color=fixture.rows[i].colorId==='custom-test'?'#123456':'#0A2989';
+  const ink=thumbnails.nth(i).locator('path').last();
+  expect(await ink.evaluate(path=>[path.getAttribute('fill'),path.getAttribute('stroke')])).toContain(color);
+  expect(await ink.getAttribute('d')).toBeTruthy();
+ }
+
  const map=await page.locator('.report-assembly-preview').evaluate(img=>{
   const svg=new DOMParser().parseFromString(decodeURIComponent(img.src.split(',')[1]),'image/svg+xml');
   return {labels:[...svg.querySelectorAll('text')].map(t=>({cell:t.dataset.cell,number:Number(t.textContent),x:Number(t.getAttribute('x')),y:Number(t.getAttribute('y'))})),paths:svg.querySelectorAll('path').length};
@@ -35,5 +44,13 @@ test('part IDs map every placed insert to its combination and filament counts ag
  await page.emulateMedia({media:'print'});
  for(const selector of ['.report-preview','.report-assembly-preview','.parts-checklist','.filament-estimate'])await expect(page.locator(selector)).toBeVisible();
  await page.evaluate(()=>window.dispatchEvent(new Event('beforeprint')));
+ // A4 is narrower than Letter; both use the report's 16mm page margins.
+ const printableWidth=(210-32)*96/25.4;
+ const bounds=await page.locator('#parts-report').evaluate(report=>({width:report.getBoundingClientRect().width,scroll:report.scrollWidth,client:report.clientWidth}));
+ expect(bounds.width).toBeLessThanOrEqual(printableWidth+1);
+ expect(bounds.scroll).toBeLessThanOrEqual(bounds.client);
+ const tableBounds=await page.locator('.parts-checklist').boundingBox();
+ expect(tableBounds.width).toBeLessThanOrEqual(printableWidth+1);
+
  expect(await page.locator('.parts-checklist tbody tr td:first-child').allTextContents()).toEqual(['1','2','3']);
 });

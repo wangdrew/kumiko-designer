@@ -378,15 +378,16 @@ function renderParts(){
  if(!rows.length){text('p','No inserts placed yet. Empty spaces are omitted from this list.');return;}
  text('h2','Parts checklist');
  const table=document.createElement('table');table.className='parts-checklist';report.append(table);const head=table.createTHead().insertRow();
- for(const title of ['Part ID','Design','Filament color','Hex','Full','Half','Total']){const th=document.createElement('th');th.scope='col';th.textContent=title;head.append(th);}
+ for(const title of ['Part ID','Design','Preview','Filament color','Hex','Full','Half','Total']){const th=document.createElement('th');th.scope='col';th.textContent=title;head.append(th);}
  const body=table.createTBody();for(const item of rows){const row=body.insertRow(),color=colors().find(c=>c.id===item.colorId);
   row.dataset.partId=item.number;text('td',String(item.number),row);
   const design=row.insertCell();text('strong',`#${item.patternId}`,design);const pattern=C.patterns.find(p=>p.id===item.patternId);text('small',pattern.name,design);if(pattern.requiresGlue)text('small','! Requires glue',design);
+  const thumbnail=preview(pattern,color.hex);thumbnail.classList.add('report-insert-preview');row.insertCell().append(thumbnail);
   const colorCell=row.insertCell(),swatch=text('i','',colorCell);swatch.className='report-swatch';swatch.style.background=color.hex;
   text('span',color.name,colorCell);text('small',color.family==='custom'?'Custom':`Bambu PLA ${color.family==='matte'?'Matte':'Basic'}`,colorCell);
   for(const value of [color.hex,item.full,item.half,item.quantity])text('td',String(value),row);
  }
- const foot=table.createTFoot().insertRow(),label=foot.insertCell();label.colSpan=4;label.textContent='Total inserts';for(const key of ['full','half','quantity'])text('td',String(rows.reduce((n,r)=>n+r[key],0)),foot);
+ const foot=table.createTFoot().insertRow(),label=foot.insertCell();label.colSpan=5;label.textContent='Total inserts';for(const key of ['full','half','quantity'])text('td',String(rows.reduce((n,r)=>n+r[key],0)),foot);
  text('p','Full = complete triangular insert. Half = a clipped insert along the panel edge. Quantities count individual pieces, not full triangles to cut. Empty spaces are excluded.').className='report-note';
  text('h2','Filament use estimate');
  text('p','Piece counts by filament color across all designs. Full and half pieces each count as one piece; this is not a weight or length estimate.').className='report-note';
